@@ -3,7 +3,7 @@ var mySqlConnection=mysql.createConnection({
     host:'localhost',
     user:'root',
     password:'470211',
-    database:'Employee_details'
+    database:'Employee_detail'
 })
 mySqlConnection.connect((err)=>{
     if(err){
