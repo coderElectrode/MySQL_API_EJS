@@ -1,10 +1,17 @@
 const mySqlConnection = require('./connection')
-const checkDB = (req, res, next) => {
+const checkDBTable = (req, res,next) => {
     mySqlConnection.query("SELECT * FROM Employee", (err) => {
         if (err) {
-            return true;
-            next();
-
+            var sql = "CREATE TABLE Employee (Emp_id VARCHAR(10), name VARCHAR(255), email VARCHAR(225))";
+            mySqlConnection.query(sql, function (err, result) {
+                if (err) throw err;
+                res.send({
+                    Status: 'Success',
+                    Message: "Table created"
+                })
+            });
+        
+           
         }
         else {
             res.send({
@@ -17,17 +24,5 @@ const checkDB = (req, res, next) => {
 
 }
 
-const createDB=(req,res)=>{
-    var sql = "CREATE TABLE Employee (name VARCHAR(255), address VARCHAR(255))";
-  con.query(sql, function (err, result) {
-    if (err) throw err;
-    console.log("Table created");
-    res.send({
-        Status:'Success',
-        Message:"Table created"
-    })
-  });
 
-}
-
-module.exports=checkDB, createDB;
+module.exports = checkDBTable;
