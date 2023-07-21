@@ -2,7 +2,8 @@ const express=require("express")
 const mySqlConnection=require('../connection')
 
 const checkEmployee=(req,res,next)=>{
-const query=`SELECT * FROM Employee WHERE Emp_id=${req.body.id}`;
+    id=req.body.Emp_id;
+const query=`SELECT * FROM Employee WHERE Emp_id ={} `;
 mySqlConnection.query(query,(err,result)=>{
     if(err){
        next();
