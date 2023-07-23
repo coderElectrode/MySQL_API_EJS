@@ -1,6 +1,5 @@
 const express = require('express')
 const connection = require('./connection');
-//const bodyParser = require('body-parser');
 const checkDBTable = require('./dbCOntroller')
 const employeeController = require('./EmployeeController/employee')
 const app = express();

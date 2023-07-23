@@ -8,7 +8,7 @@ console.log(query);
 mySqlConnection.query(query,(err,result)=>{
     if(result==""){
        next();
-       console.log('does not exist')
+       console.log('Employee does not exist')
     }
     else{
         res.send({
@@ -32,4 +32,59 @@ const addEmployee =(req,res,next)=>{
     })
 }
 
-module.exports={checkEmployee, addEmployee}
+const getAllEmpDetails=(req,res)=>{
+    const query=`SELECT * FROM Employee`; 
+    mySqlConnection.query(query,(err,result)=>{
+        res.send({
+            Status:'Successful',
+            data:result,
+        })
+
+    })
+
+}
+
+const updateUserNameByID=(req,res)=>{
+    const id=req.body.Emp_id;
+    const query=`UPDATE Employee SET name='${req.body.name}' WHERE Emp_id=${id}`;
+    const update=mySqlConnection.query(query,(err,result)=>{
+         if(result.affectedRows==0){
+             res.send({
+                 Status:"Failed",
+                Message:"Enter Correct Employee Id, ID does not Match"
+             })
+        }
+        else{
+            res.send({
+                Status:"Successful",
+                Message:"Employee Name Updated, You can check it BY browsing link-> localhost:5000/employee/list"
+            })
+        }
+
+      
+    })
+}
+
+const deleteEmployeeByID=(req,res)=>{
+    const id=req.body.Emp_id;
+    const query=`DELETE FROM Employee WHERE Emp_id=${id}`;
+    const update=mySqlConnection.query(query,(err,result)=>{
+        if(result.affectedRows==0){
+            res.send({
+                Status:"Failed",
+                Message:"Please Enter Correct Employee ID"
+            })
+        }
+        else{
+            res.send({
+                Status:"Successful",
+                Message:"Employee Record Deleted, You can check it BY browsing link-> localhost:5000/employee/list"
+            })
+        }
+        
+    })
+ 
+}
+
+
+module.exports={checkEmployee, addEmployee,getAllEmpDetails,updateUserNameByID,deleteEmployeeByID}
